@@ -1,0 +1,52 @@
+spring:
+  application.name: my-o11y-app
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    username: admin
+    password: 12344321
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, httptrace, metrics, prometheus
+
+otel:
+  exporter:
+    otlp:
+      metrics:
+        enabled: false
+---
+
+spring:
+  application.name: my-o11y-app
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://{$AURORA_ENDPOINT_URL}/{$AURORA_DATABASE}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    username: admin
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, httptrace, metrics, prometheus
+
+otel:
+  exporter:
+    otlp:
+      metrics:
+        enabled: false
